@@ -1,14 +1,13 @@
 //
 //  main.c
 //  SnakeAndLadders
-//
 //  Created by Chloe Al-Frenn on 2022-12-27.
 //
 
 #include <stdio.h>
 #include <stdlib.h>
 
-void printBoard(void);
+void printBoard(int, int);
 int diceRoll(void);
 void checkSnakeOrLadder(int *, int);
 
@@ -29,7 +28,7 @@ int main(int argc, const char * argv[]) {
     }
     
     printf("Here is the board:\n");
-    printBoard();
+    printBoard(0, 0);
     printf("Snakes are located from 36 to 9, 83 to 42 and 95 to 35");
     printf(" and ladders are located from 3 to 24, 33 to 48 and 53 to 79.\n");
     printf("Now lets start the game!\n");
@@ -37,6 +36,7 @@ int main(int argc, const char * argv[]) {
     int entry;
     int playing = 0; //player who is playing now we start at player 1 who's at index 0
     int dice;
+    int won = 0;
     while(1){
         printf("\n------------------------- \n");
         printf(" 1 to continue playing\n");
@@ -47,45 +47,57 @@ int main(int argc, const char * argv[]) {
         printf("\n");
      
         if(entry == 1){
-            printf("player %d's turn\n", playing+1);
+            printf("Player %d's turn\n", playing+1);
             dice = diceRoll();
             printf("you rolled %d\n", dice);
             if(playersPos[playing] + dice < 100){
                 playersPos[playing] = playersPos[playing] + dice; // set the position
                 checkSnakeOrLadder(playersPos, playing);
                 printf("your new position is %d\n", playersPos[playing]);
+                printBoard(playersPos[playing], playing+1);
             } else if(playersPos[playing] + dice == 100) {
-               playersPos[playing] = playersPos[playing] + dice;
-               printf("your new position is %d\n", playersPos[playing]);
-               printf("player %d's won\n", playing+1);
-               break;
+                playersPos[playing] = playersPos[playing] + dice;
+                printf("your new position is %d\n", playersPos[playing]);
+                printBoard(playersPos[playing], playing+1);
+                printf("Player %d won\n", playing+1);
+                won = 1;
+                break;
                
            } else {
                printf("you exceeded 100 so your position will not change\n");
+               printBoard(playersPos[playing], playing+1);
            }
         
             while(dice == 6){
-                printf("player %d's turn again after rolling a 6\n", playing+1);
+                printf("Player %d's turn again after rolling a 6\n", playing+1);
                 dice = diceRoll();
                 printf("you rolled %d\n", dice);
                 if(playersPos[playing] + dice < 100){
                     playersPos[playing] = playersPos[playing] + dice; // set the position
                     checkSnakeOrLadder(playersPos, playing);
                     printf("your new position is %d\n", playersPos[playing]);
+                    printBoard(playersPos[playing], playing+1);
                 } else if(playersPos[playing] + dice == 100) {
                     playersPos[playing] = playersPos[playing] + dice;
                     printf("your new position is %d\n", playersPos[playing]);
-                    printf("player %d won\n", playing+1);
+                    printBoard(playersPos[playing], playing+1);
+                    printf("Player %d won\n", playing+1);
+                    won = 1;
                     break;
+                
                     
                 } else {
                     printf("you exceeded 100 so your position will not change\n");
+                    printBoard(playersPos[playing], playing+1);
                 }
+    
             }
             
-            if(playersPos[playing] + dice == 100) {
+            if(won == 1){
                 break;
             }
+            
+        
         }
         else if(entry == 2){
             //show rules
@@ -104,23 +116,33 @@ int main(int argc, const char * argv[]) {
 }
 
 //Function that prints the board in the same way a normal snake and ladders game board is printed
-void printBoard(){
+void printBoard(int pos, int player){
     int change = 1;
+    printf("\n");
     for(int i=100; i>0; i =i-10){
         int current;
         
         if(change == 1) {
             for(int j=0; j<10; j++){
                 current = i-j;
-                printf("%d ", current);
+                if(current == pos){
+                    printf("Player%d ", player);
+                } else {
+                    printf("%d ", current);
+                }
             }
         }
         
         if (change == -1) {
             for(int k=9; k>=0; k--){
                 current = i-k;
-                printf("%d ", current);
+                if(current == pos){
+                    printf("Player%d ", player);
+                } else {
+                    printf("%d ", current);
+                }
             }
+            
         }
 
         printf("\n");
