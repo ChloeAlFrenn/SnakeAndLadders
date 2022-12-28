@@ -1,7 +1,5 @@
-//
-//  main.c
-//  SnakeAndLadders
-//  Created by Chloe Al-Frenn on 2022-12-27.
+
+//  SnakeAndLadders game implemented in c by ChloeAlFrenn
 //
 
 #include <stdio.h>
@@ -10,12 +8,15 @@
 void printBoard(int, int);
 int diceRoll(void);
 void checkSnakeOrLadder(int *, int);
+void showRules(void);
 
+//main function who manages the game
 int main(int argc, const char * argv[]) {
     
     int numOfPlayers;
     
-    printf("Welcome to snakes and ladders\n");
+    printf("Welcome to my snake and ladders game!\n\n");
+    showRules();
     printf("Enter the number of players varying from 2 to 4\n");
     scanf("%d", &numOfPlayers);
     while(numOfPlayers > 4 || numOfPlayers < 2){
@@ -26,7 +27,6 @@ int main(int argc, const char * argv[]) {
     for(int i=0; i<numOfPlayers; i++){
         playersPos[i] = 0; //initializes everyone's position at 0
     }
-    
     printf("Here is the board:\n");
     printBoard(0, 0);
     printf("Snakes are located from 36 to 9, 83 to 42 and 95 to 35");
@@ -34,9 +34,9 @@ int main(int argc, const char * argv[]) {
     printf("Now lets start the game!\n");
    
     int entry;
-    int playing = 0; //player who is playing now we start at player 1 who's at index 0
+    int playing = 0; //player who is playing currently
     int dice;
-    int won = 0;
+    int won = 0; // is set to 1 if anyone wins
     while(1){
         printf("\n------------------------- \n");
         printf(" 1 to continue playing\n");
@@ -100,8 +100,7 @@ int main(int argc, const char * argv[]) {
         
         }
         else if(entry == 2){
-            //show rules
-            printf("show rules :)\n");
+            showRules();
         }
         else if (entry == 3){
           printf("Thank you for playing!\n");
@@ -115,7 +114,7 @@ int main(int argc, const char * argv[]) {
     return 0;
 }
 
-//Function that prints the board in the same way a normal snake and ladders game board is printed
+//function that prints the board of the game, it will also show the current player's position
 void printBoard(int pos, int player){
     int change = 1;
     printf("\n");
@@ -150,7 +149,8 @@ void printBoard(int pos, int player){
     }
     printf("\n");
 }
-//generates and returns a random number between 1 and 6
+
+//function generates and returns a random number between 1 and 6
 int diceRoll(){
     int r = rand()%7;
     if(r == 0){
@@ -159,7 +159,7 @@ int diceRoll(){
         return r;
 }
 
-//receives a pointer to an array as a parameter
+//function that receives a pointer to an array as a parameter and changes the value of the array accordingly
 void checkSnakeOrLadder(int *position, int player){
     int pos = position[player];
     switch(pos){
@@ -190,4 +190,12 @@ void checkSnakeOrLadder(int *position, int player){
         default:
             break;
     }
+}
+
+//function that prints the rules of the game
+void showRules(){
+    printf("These are the rules: ");
+    printf("You roll a dice from 1 to 6, and if you land on 6 you can roll again. \nYour position will be incremented by the number rolled.\n");
+    printf("Also if you stumble onto a snake or a ladder your position will then be incremented or decremented by their specific amount.\n");
+    printf("Finally to win you need to land on 100, if you exceed this number your position will not be changed until you reach the exact value.\n \n");
 }
