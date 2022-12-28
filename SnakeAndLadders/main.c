@@ -30,18 +30,21 @@ int main(int argc, const char * argv[]) {
     
     printf("Here is the board:\n");
     printBoard();
-    printf("Snakes are located at ");
-    printf("and ladders are located at\n");
-    printf("now lets start the game!\n");
+    printf("Snakes are located from 36 to 9, 83 to 42 and 95 to 35");
+    printf(" and ladders are located from 3 to 24, 33 to 48 and 53 to 79.\n");
+    printf("Now lets start the game!\n");
    
     int entry;
     int playing = 0; //player who is playing now we start at player 1 who's at index 0
     int dice;
     while(1){
-        printf("1 to continue playing\n");
-        printf("2 to get the rules\n");
-        printf("3 to exit the game\n");
+        printf("\n------------------------- \n");
+        printf(" 1 to continue playing\n");
+        printf(" 2 to get the rules\n");
+        printf(" 3 to exit the game\n");
+        printf("------------------------- \n");
         scanf("%d", &entry);
+        printf("\n");
      
         if(entry == 1){
             printf("player %d's turn\n", playing+1);
@@ -58,10 +61,9 @@ int main(int argc, const char * argv[]) {
                break;
                
            } else {
-               printf("you exceeded 100 so your position will not change");
+               printf("you exceeded 100 so your position will not change\n");
            }
         
-            //check if there is a snake or ladder //give the array as a pointer
             while(dice == 6){
                 printf("player %d's turn again after rolling a 6\n", playing+1);
                 dice = diceRoll();
@@ -73,11 +75,11 @@ int main(int argc, const char * argv[]) {
                 } else if(playersPos[playing] + dice == 100) {
                     playersPos[playing] = playersPos[playing] + dice;
                     printf("your new position is %d\n", playersPos[playing]);
-                    printf("player %d's won\n", playing+1);
+                    printf("player %d won\n", playing+1);
                     break;
                     
                 } else {
-                    printf("you exceeded 100 so your position will not change");
+                    printf("you exceeded 100 so your position will not change\n");
                 }
             }
             
