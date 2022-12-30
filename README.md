@@ -1,6 +1,6 @@
-# SnakeAndLadders 
+# SnakesAndLadders 
 
-Snake and Ladders game using the c programming language by Chloé Al-Frenn
+Snakes and Ladders game using the c programming language by Chloé Al-Frenn
 
 The ladders are situated from:
 3 to 24, 33 to 48 and 53 to 79.
